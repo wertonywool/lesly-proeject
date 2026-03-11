@@ -19,7 +19,12 @@
 
     <div class="wish-container" id="initial-ui">
         <h1 class="wish-title">TU DESTINO</h1>
-        <button class="btn-main wish-button" onclick="startWish()">Pedir Deseo</button>
+        <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+            <button class="btn-main wish-button" onclick="startWish()">Pedir Deseo</button>
+            <button id="fullscreen-btn" onclick="toggleFullscreen()" style="background: rgba(255,255,255,0.1); border: 1px solid var(--color-gold); color: var(--color-gold); padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: var(--font-main); font-size: 0.8rem; letter-spacing: 2px;">
+                📺 MODO CINE (FULLSCREEN)
+            </button>
+        </div>
     </div>
 
     <div id="birthday-overlay">
@@ -126,6 +131,20 @@
             setTimeout(() => {
                 window.location.href = '../lesly.html';
             }, 1000);
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error al intentar modo pantalla completa: ${err.message}`);
+                });
+                document.getElementById('fullscreen-btn').innerText = "❌ SALIR DE PANTALLA COMPLETA";
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    document.getElementById('fullscreen-btn').innerText = "📺 MODO CINE (FULLSCREEN)";
+                }
+            }
         }
     </script>
 </body>
