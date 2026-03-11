@@ -1,0 +1,275 @@
+/* --- Variables y Reset --- */
+:root {
+    --crimson: #ff1a1a;
+    --carbon: #0a0a0a;
+    --white: #ffffff;
+    --gold: #ffcc00;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    background-color: var(--carbon);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+h1, h2, h3 {
+    font-family: 'Cinzel', serif;
+}
+
+/* --- Layout de Pantallas --- */
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: opacity 1s ease;
+}
+
+.hidden {
+    display: none !important;
+    opacity: 0;
+}
+
+/* --- Efectos Globales --- */
+#ash-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+#flash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 40%, rgba(255, 26, 26, 0.2) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* --- Pantalla de Intro --- */
+#intro-screen {
+    background-color: black;
+    z-index: 100;
+}
+
+.btn-contract {
+    padding: 15px 40px;
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--crimson);
+    background: transparent;
+    border: 2px solid var(--crimson);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 0 15px rgba(255, 26, 26, 0.3);
+    z-index: 10;
+}
+
+.btn-contract:hover {
+    background: var(--crimson);
+    color: white;
+    box-shadow: 0 0 30px var(--crimson);
+}
+
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: grayscale(0.3) brightness(0.7);
+}
+
+/* --- Minijuego --- */
+#minigame-screen {
+    background: radial-gradient(circle, #1a0000 0%, #000 100%);
+}
+
+.orb {
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    background: radial-gradient(circle, var(--crimson) 0%, transparent 70%);
+    border-radius: 50%;
+    cursor: pointer;
+    filter: blur(2px);
+    box-shadow: 0 0 20px var(--crimson);
+    animation: orbPulse 1.2s infinite alternate;
+}
+
+@keyframes orbPulse {
+    from { transform: scale(1); opacity: 0.7; }
+    to { transform: scale(1.15); opacity: 1; }
+}
+
+.progress-container {
+    position: absolute;
+    bottom: 50px;
+    width: 300px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--crimson);
+    box-shadow: 0 0 15px var(--crimson);
+    transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.game-instruction {
+    margin-bottom: 30px;
+    font-size: 1.6rem;
+    color: var(--crimson);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px black;
+}
+
+/* --- Meteorito --- */
+#meteor-screen {
+    background: black;
+    z-index: 500;
+}
+
+.meteor {
+    width: 5px;
+    height: 5px;
+    background: var(--gold);
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0 25px 8px var(--gold), 0 0 60px 15px var(--gold);
+    transform: rotate(-45deg);
+}
+
+.meteor-tail {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 350px;
+    height: 3px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    transform-origin: left center;
+}
+
+/* --- Ficha de Personaje --- */
+#card-screen {
+    background: url('https://images.alphacoders.com/135/1355444.jpeg') no-repeat center center/cover;
+    perspective: 1500px;
+}
+
+.card-container {
+    width: 420px;
+    height: 620px;
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid var(--crimson);
+    border-radius: 12px;
+    padding: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transform-style: preserve-3d;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 26, 26, 0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 26, 26, 0.3);
+}
+
+.rarity-stars {
+    color: var(--gold);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px var(--gold);
+}
+
+.char-name {
+    font-size: 3.5rem;
+    margin-bottom: 5px;
+    letter-spacing: 8px;
+    background: linear-gradient(to bottom, #fff, #999);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.char-level {
+    font-size: 1.3rem;
+    color: var(--crimson);
+    margin-bottom: 35px;
+    font-weight: 600;
+}
+
+.char-title {
+    font-style: italic;
+    margin-bottom: 25px;
+    color: #bbb;
+    font-weight: 300;
+}
+
+.attributes {
+    width: 100%;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.attr-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 26, 26, 0.2);
+    padding-bottom: 8px;
+}
+
+.attr-label { color: #777; font-size: 0.9rem; text-transform: uppercase; }
+.attr-value { color: var(--crimson); font-weight: 700; }
+
+.birthday-message {
+    margin-top: 45px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #ccc;
+    font-family: 'Outfit', sans-serif;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+}

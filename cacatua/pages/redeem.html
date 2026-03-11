@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canje de Recompensas | Lesly</title>
+    
+    <!-- CSS Globales -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    
+    <style>
+        #bg-video { position: fixed; top: 50%; left: 50%; min-width: 100%; min-height: 100%; z-index: -1; transform: translate(-50%, -50%); filter: brightness(0.3); object-fit: cover; }
+        
+        .redeem-container {
+            width: 95%;
+            max-width: 900px;
+            background: rgba(10, 10, 12, 0.95);
+            border: 1px solid var(--color-gold);
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            margin-top: 100px;
+        }
+
+        /* --- SISTEMA DE PROGRESO --- */
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-family: var(--font-title);
+        }
+
+        .main-progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(198, 161, 91, 0.3);
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        #progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(to right, var(--color-gold), #ffcc00);
+            transition: width 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 15px var(--glow-sakura);
+        }
+
+        /* --- GRID DE CÓDIGOS --- */
+        .codes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .code-slot {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            transition: 0.3s;
+            opacity: 0.6;
+        }
+
+        .code-slot.unlocked {
+            background: rgba(198, 161, 91, 0.1);
+            border-color: var(--color-gold);
+            opacity: 1;
+            box-shadow: 0 0 15px rgba(198, 161, 91, 0.2);
+        }
+
+        .code-slot i { font-size: 1.5rem; display: block; margin-bottom: 5px; }
+        .code-slot span { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-gold); }
+
+        /* --- INPUT --- */
+        .redeem-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--color-gold);
+            padding: 15px 20px;
+            color: #fff;
+            font-family: 'Cinzel';
+            letter-spacing: 2px;
+            outline: none;
+            border-radius: 4px;
+        }
+
+        /* --- FINAL SECRETO --- */
+        #final-reward {
+            display: none;
+            text-align: center;
+            animation: fadeIn 1s ease, glowPulse 2s infinite;
+            margin-top: 30px;
+            padding: 30px;
+            border: 2px solid var(--color-gold);
+            background: radial-gradient(circle, rgba(198, 161, 91, 0.2) 0%, transparent 100%);
+        }
+
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 20px rgba(198, 161, 91, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(198, 161, 91, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(198, 161, 91, 0.2); }
+        }
+    </style>
+</head>
+<body class="sakura-theme">
+    <video autoplay muted loop id="bg-video">
+        <source src="https://fastcdn.hoyoverse.com/content-v2/hk4e/121081/4f21d6f5f902640f065a6c17f9b8417c_4732158882042733475.mp4" type="video/mp4">
+    </video>
+
+    <header class="universal-header">
+        <div class="brand">
+            <span class="birthday-cake" onclick="createBalloons()" style="cursor: pointer; font-size: 1.8rem; margin-right: 10px; transition: transform 0.3s ease; display: inline-block;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">🎂</span>
+            <span>Cumpleaños de Lesly</span>
+        </div>
+        <nav class="nav-links">
+            <a href="../lesly.html">ARCHIVO</a>
+            <a href="mailbox.html">BUZÓN</a>
+            <a href="game.html">PRUEBA</a>
+            <a href="redeem.html" class="active">CANJEAR</a>
+            <a href="../index.html" class="btn-exit">SALIR</a>
+        </nav>
+    </header>
+
+    <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 40px 20px;">
+        <div class="redeem-container">
+            <div class="progress-header">
+                <h2 style="color: var(--color-gold); letter-spacing: 5px;">COLECCIÓN DE DESEOS</h2>
+                <span id="progress-text">0 / 6</span>
+            </div>
+            
+            <div class="main-progress-bar">
+                <div id="progress-fill"></div>
+            </div>
+
+            <div class="codes-grid">
+                <div class="code-slot" id="slot-LESLY-ARLE-C6"><i>📱</i><span>Discord Josue</span></div>
+                <div class="code-slot" id="slot-LESLY-GIFT-2026"><i>✉️</i><span>Buzón Mensajes</span></div>
+                <div class="code-slot" id="slot-LESLY-SUSHI-60"><i>🍣</i><span>Chef Sushi</span></div>
+                <div class="code-slot" id="slot-LESLY-PAN-2026"><i>📜</i><span>Historial Deseos</span></div>
+                <div class="code-slot" id="slot-LESLY-ATRAPADA-08"><i>📖</i><span>Sección Capítulos</span></div>
+                <div class="code-slot" id="slot-LESLY-EXPLOSION777"><i>✨</i><span>Edicto Amistad</span></div>
+            </div>
+
+            <div class="redeem-input-group">
+                <input type="text" id="code-input" placeholder="INGRESA TU CÓDIGO AQUÍ..." autocomplete="off">
+                <button class="btn-main" onclick="handleRedeem()">CANJEAR</button>
+            </div>
+            <p id="redeem-msg" style="text-align: center; font-size: 0.8rem; height: 20px;"></p>
+
+            <div id="final-reward">
+                <h3 style="font-family: var(--font-title); color: #ffcc00; font-size: 1.5rem; margin-bottom: 15px;">¡HAS RECOLECTADO TODOS LOS DESEOS!</h3>
+                <p style="color: #fff; margin-bottom: 25px;">Has demostrado ser una aventurera excepcional. Tu recompensa final te espera...</p>
+                <button class="btn-main" style="padding: 20px 50px; font-size: 1.2rem;" onclick="openFinalVideo()">
+                    🎞️ VER MI SORPRESA FINAL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/sounds.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        const validCodes = [
+            "LESLY-ARLE-C6", 
+            "LESLY-GIFT-2026", 
+            "LESLY-SUSHI-60", 
+            "LESLY-PAN-2026", 
+            "LESLY-ATRAPADA-08", 
+            "LESLY-EXPLOSION777"
+        ];
+
+        let redeemedCodes = JSON.parse(localStorage.getItem('redeemedCodes')) || [];
+
+        function updateUI() {
+            const count = redeemedCodes.length;
+            document.getElementById('progress-text').innerText = `${count} / 6`;
+            document.getElementById('progress-fill').style.width = `${(count / 6) * 100}%`;
+
+            // Actualizar slots
+            validCodes.forEach(code => {
+                const slot = document.getElementById(`slot-${code}`);
+                if (redeemedCodes.includes(code)) {
+                    slot.classList.add('unlocked');
+                }
+            });
+
+            // Mostrar recompensa final si están todos
+            if (count >= 6) {
+                document.getElementById('final-reward').style.display = 'block';
+                document.querySelector('.redeem-input-group').style.display = 'none';
+            }
+        }
+
+        function handleRedeem() {
+            const input = document.getElementById('code-input');
+            const code = input.value.trim().toUpperCase();
+            const msg = document.getElementById('redeem-msg');
+
+            if (!code) return;
+
+            if (!validCodes.includes(code)) {
+                msg.innerText = "CÓDIGO INVÁLIDO O EXPIRADO";
+                msg.style.color = "var(--color-crimson)";
+                if(window.SoundManager) SoundManager.play('alert');
+            } else if (redeemedCodes.includes(code)) {
+                msg.innerText = "ESTE CÓDIGO YA HA SIDO UTILIZADO";
+                msg.style.color = "var(--color-gold)";
+            } else {
+                redeemedCodes.push(code);
+                localStorage.setItem('redeemedCodes', JSON.stringify(redeemedCodes));
+                msg.innerText = "¡CÓDIGO CANJEADO CON ÉXITO!";
+                msg.style.color = "#00ff00";
+                input.value = "";
+                updateUI();
+                if(window.SoundManager) SoundManager.play('wish5');
+                
+                // Efecto de brillo flash
+                const container = document.querySelector('.redeem-container');
+                container.style.boxShadow = "0 0 100px var(--color-gold)";
+                setTimeout(() => container.style.boxShadow = "0 0 50px rgba(0,0,0,0.9)", 500);
+            }
+
+            setTimeout(() => msg.innerText = "", 3000);
+        }
+
+        function openFinalVideo() {
+            // URL FINAL DE YOUTUBE
+            const youtubeURL = "https://youtu.be/0tXAXOntlBY";
+            
+            if(window.SoundManager) SoundManager.play('transition');
+            
+            // Animación de salida épica
+            document.body.style.transition = 'opacity 1.5s ease, filter 1.5s ease';
+            document.body.style.opacity = '0';
+            document.body.style.filter = 'blur(20px)';
+            
+            setTimeout(() => {
+                window.open(youtubeURL, '_blank');
+            }, 1500);
+        }
+
+        window.onload = updateUI;
+    </script>
+</body>
+</html>

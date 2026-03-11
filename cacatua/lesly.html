@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivo Central | Proyecto Lesly</title>
+    
+    <!-- CSS Globales y de Componentes -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- CSS Específico de Página -->
+    <link rel="stylesheet" href="css/pages/lesly.css">
+</head>
+<body class="sakura-theme">
+
+    <div id="loader" style="position: fixed; inset: 0; background: #050505; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.8s ease;">
+        <div style="font-family: 'Cinzel'; color: var(--color-gold); font-size: 1.5rem; letter-spacing: 5px; text-align: center; line-height: 2;">
+            holaa lesly<br>
+            <span style="font-size: 0.9rem; opacity: 0.7; font-family: 'Outfit';">espera un momento mientras preparamos todo... ✨</span>
+        </div>
+        <div class="loader-bar" style="width: 200px; height: 2px; background: rgba(255,255,255,0.1); margin-top: 30px; position: relative; overflow: hidden;">
+            <div style="position: absolute; inset: 0; background: var(--color-sakura); animation: loaderLoading 2s infinite;"></div>
+        </div>
+        <div style="margin-top: 20px; font-size: 2rem; animation: float 3s infinite;">🌸</div>
+    </div>
+
+    <div class="dynamic-bg"></div>
+    <div class="texture-overlay"></div>
+
+    <script src="js/sounds.js"></script>
+    <script src="js/main.js"></script>
+
+    <header class="universal-header">
+        <div class="brand">
+            <span class="birthday-cake" onclick="createBalloons()" style="cursor: pointer; font-size: 1.8rem; margin-right: 10px; transition: transform 0.3s ease; display: inline-block;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">🎂</span>
+            <span>Cumpleaños de Lesly</span>
+        </div>
+        <nav class="nav-links">
+            <a href="lesly.html" class="active">ARCHIVO</a>
+            <a href="pages/mailbox.html">BUZÓN</a>
+            <a href="pages/game.html">PRUEBA</a>
+            <a href="pages/redeem.html">CANJEAR</a>
+            <a href="index.html" class="btn-exit">SALIR</a>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <section class="hero-section">
+            <p>🌟 TU ARCHIVO PERSONAL DE AVENTURAS 🌟</p>
+            <h1>¡FELIZ CUMPLEAÑOS!</h1>
+        </section>
+
+        <div class="menu-grid">
+            <a href="pages/story.html" class="menu-card">
+                <div class="card-icon">📖</div>
+                <h3>MEMORIAS</h3>
+                <p>Nuestra historia juntos</p>
+                <div class="card-corner"></div>
+            </a>
+
+            <a href="pages/game.html" class="menu-card">
+                <div class="card-icon">🎮</div>
+                <h3>MINIJUEGO</h3>
+                <p>¡Atrapa el sushi!</p>
+                <div class="card-corner"></div>
+            </a>
+
+            <a href="pages/mailbox.html" class="menu-card">
+                <div class="card-icon">✉️</div>
+                <h3>BUZÓN</h3>
+                <p>Cartas especiales</p>
+                <div class="card-corner"></div>
+            </a>
+
+            <a href="pages/contract.html" class="menu-card">
+                <div class="card-icon">📜</div>
+                <h3>EDICTO</h3>
+                <p>Contrato de amistad</p>
+                <div class="card-corner"></div>
+            </a>
+
+            <a href="pages/redeem.html" class="menu-card">
+                <div class="card-icon">💎</div>
+                <h3>CANJEAR</h3>
+                <p>Códigos de regalo</p>
+                <div class="card-corner"></div>
+            </a>
+
+            <a href="pages/history.html" class="menu-card">
+                <div class="card-icon">⏳</div>
+                <h3>HISTORIAL</h3>
+                <p>Línea del tiempo</p>
+                <div class="card-corner"></div>
+            </a>
+        </div>
+    </main>
+
+</body>
+</html>

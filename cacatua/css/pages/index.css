@@ -1,0 +1,106 @@
+/* =========================================
+    PÁGINA DE INICIO (INDEX.HTML)
+   ========================================= */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.hero-wrapper {
+    position: relative;
+    width: min(90%, 650px);
+    padding: clamp(2rem, 5vh, 4rem);
+    background: var(--glass);
+    border: 1px solid var(--border-soft);
+    backdrop-filter: blur(20px);
+    border-radius: 4px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    transition: all 0.8s cubic-bezier(0.2, 1, 0.2, 1);
+    z-index: 10;
+    text-align: center;
+    perspective: 1200px;
+}
+
+.event-tag {
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    color: var(--color-sakura);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    border-bottom: 1px solid rgba(255, 183, 197, 0.3);
+    padding-bottom: 4px;
+}
+
+.main-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 200;
+    line-height: 1.2;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+    font-family: var(--font-alt);
+}
+
+.name-highlight {
+    font-family: var(--font-hand);
+    color: #fff;
+    font-weight: 700;
+    display: block;
+    margin-top: 10px;
+    text-shadow: 0 0 20px var(--glow-sakura);
+}
+
+.intro-text {
+    font-weight: 200;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+.quote {
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--color-sakura);
+    opacity: 0.8;
+    margin-top: 1rem;
+    padding: 15px;
+    border-left: 2px solid var(--color-crimson);
+    background: rgba(139, 29, 46, 0.05);
+}
+
+.resine-info {
+    margin-top: 2rem;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    opacity: 0.4;
+    text-transform: uppercase;
+}
+
+/* Overlay de transición */
+#flash-overlay {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Clases de Animación (JS) */
+.is-animating {
+    transform: scale(1.05) translateY(-20px) rotateX(5deg) !important;
+    border-color: var(--color-sakura) !important;
+    box-shadow: 0 0 100px rgba(255, 183, 197, 0.2) !important;
+}
+
+.implode {
+    transform: scale(0) rotate(20deg) !important;
+    opacity: 0 !important;
+    transition: all 0.5s cubic-bezier(0.6, 0, 0.4, 1) !important;
+}
