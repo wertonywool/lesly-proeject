@@ -35,6 +35,17 @@
         </div>
     </div>
 
+    <div id="retry-overlay" style="display: none; position: fixed; inset: 0; background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, rgba(0, 0, 0, 0.9) 80%); z-index: 100; flex-direction: column; align-items: center; justify-content: center; text-align: center; animation: revealBlur 1s forwards;">
+        <div class="retry-box" style="padding: 40px; border: 2px solid var(--color-gold); border-radius: 20px; box-shadow: 0 0 50px var(--glow-red); background: var(--bg-card); position: relative; overflow: hidden;">
+            <div class="aura" style="position: absolute; inset: 0; background: radial-gradient(circle, var(--color-gold) 0%, transparent 70%); opacity: 0.2; animation: pulse 2s infinite;"></div>
+            <h2 style="font-family: var(--font-title); color: var(--color-gold); font-size: 2rem; margin-bottom: 20px; letter-spacing: 5px;">DESTINO REESCRITO</h2>
+            <p style="margin-bottom: 30px; opacity: 0.8; font-size: 1.1rem;">La energía carmesí ha purificado tu deseo...</p>
+            <button class="btn-main" onclick="finalInspiration()" style="background: linear-gradient(45deg, var(--color-gold), #fff, var(--color-gold)); color: #000; font-weight: bold; border: none; padding: 20px 50px; font-size: 1.2rem; box-shadow: 0 0 30px var(--color-gold); cursor: pointer; border-radius: 50px; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 0 50px var(--color-gold)';" onmouseout="this.style.transform='scale(1)';">
+                ✨ REINTENTAR DESTINO ✨
+            </button>
+        </div>
+    </div>
+
     <!-- Contenedor de Video Optimizado -->
     <video id="gacha-video" playsinline preload="auto">
         <source id="video-source-webm" src="" type="video/webm">
@@ -88,15 +99,26 @@
                 overlay.style.display = 'flex';
                 startInterventionTyping();
             } else {
-                // Comprobamos si acabamos de terminar el video de reversión
+                // Si terminamos el video de reversión, mostramos el botón de reintento
                 if (sourceWebm.src.includes('4revertido') || sourceMp4.src.includes('4revertido')) {
-                    setVideoSources('5');
-                    video.play();
+                    video.style.display = 'none';
+                    document.getElementById('retry-overlay').style.display = 'flex';
+                    if (window.SoundManager) SoundManager.play('alert');
                 } else {
+                    // Si ya es el video de 5 estrellas, terminamos
                     finishGacha();
                 }
             }
         };
+
+        function finalInspiration() {
+            document.getElementById('retry-overlay').style.display = 'none';
+            video.style.display = 'block';
+            setVideoSources('5');
+            video.play().then(() => {
+                if (window.SoundManager) SoundManager.play('wish5');
+            }).catch(e => console.log("Error en deseo final:", e));
+        }
 
         function startInterventionTyping() {
             if (window.SoundManager) SoundManager.play('alert');
